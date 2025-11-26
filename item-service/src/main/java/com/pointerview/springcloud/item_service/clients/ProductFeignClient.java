@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "msvc-products")
+@FeignClient(name = "product-service")
 public interface ProductFeignClient {
 
     @GetMapping
