@@ -2,12 +2,11 @@ package com.pointerview.springcloud.item_service.controllers;
 
 import com.pointerview.springcloud.item_service.models.Item;
 import com.pointerview.springcloud.item_service.services.ItemService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +19,11 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<List<Item>> findAll() {
+    public ResponseEntity<List<Item>> findAll(@RequestParam(required = false) String name,
+                                              @RequestHeader(name = "token-request") String token) {
+
+        System.out.println(name);
+        System.out.println(token);
         return ResponseEntity.ok(itemService.findAll());
     }
 

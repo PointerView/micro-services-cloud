@@ -1,3 +1,4 @@
+#file: noinspection invalidValue,PropertyDeprecated,undefined
 spring:
   cloud:
     gateway:
@@ -6,8 +7,18 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
+#            - Header=token, 12345
+#            - Method=GET, POST
+#            - Query=color, verde #queryParam
+#            - Cookie=color, azul
           filters:
-            - StripPrefix=2 # filtro para eliminar los dos primeros controllers del path
+            - StripPrefix=2
+            - name: SampleCookie # Nombre del filtro sin el postfijo GatewayFilterFactory, se puede dar
+              # un nombre específico con el metodo name del filtro
+              args:
+                message: Hola mi mensaje personalizado para productos!
+                name: user
+                value: Dani
 
         - id: item-service
           uri: lb://item-service
@@ -15,3 +26,7 @@ spring:
             - Path=/api/items/**
           filters:
             - StripPrefix=2
+            - AddRequestHeader=token-request, aaabbbdsdfaeg
+            - AddResponseHeader=token-response, 3542363
+            - AddRequestParameter=name, Daniel
+            - SetResponseHeader=Content-Type, text-plain # set modifica un header ya existente
