@@ -1,4 +1,4 @@
-package com.pointerview.springcloud.item_service.clients;
+package com.pointerview.springcloud.item_service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

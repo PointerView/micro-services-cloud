@@ -36,7 +36,11 @@ public class ProductServiceWebClient implements ItemService {
     @Override
     public Optional<Item> findById(Long id) {
 
-        try{
+        /*
+        * Eliminado el try-catch para que retorne la excepcion y la reciba el run
+        * del resilience4j y asi manejar el camino secundario
+        * */
+        //try{
             return Optional.ofNullable(
                     webClient.build()
                             .get()
@@ -46,8 +50,8 @@ public class ProductServiceWebClient implements ItemService {
                             .bodyToMono(Product.class)
                             .map(product -> new Item(product, new Random().nextInt(10)+1))
                             .block());
-        } catch (WebClientResponseException e) {
-            return Optional.empty();
-        }
+        //} catch (WebClientResponseException e) {
+        //    return Optional.empty();
+        //}
     }
 }

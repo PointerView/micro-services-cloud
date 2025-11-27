@@ -1,4 +1,26 @@
 #file: noinspection invalidValue,PropertyDeprecated,undefined
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      porDefecto:
+        sliding-window-size: 6
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 20s
+        permitted-number-of-calls-in-half-open-state: 4
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 50
+    instances:
+      products:
+        base-config: porDefecto
+  timelimiter:
+    configs:
+      porDefecto:
+        timeout-duration: 3s
+    instances:
+      products:
+        base-config: porDefecto
+
 spring:
   cloud:
     gateway:
@@ -12,6 +34,11 @@ spring:
 #            - Query=color, verde #queryParam
 #            - Cookie=color, azul
           filters:
+            - name: CircuitBreaker
+              args:
+                name: products # Crea un filtro CircuitBreaker con el nombre de products de cortocircuito y toma su config del yml
+                statusCodes: 500 # Indica que errores son contados para el circuit breaker
+                fallbackUri: forward:/api/items/5 # Se debe redireccionar a otro servicio que no sea el que dio error
             - StripPrefix=2
             - name: SampleCookie # Nombre del filtro sin el postfijo GatewayFilterFactory, se puede dar
               # un nombre específico con el metodo name del filtro

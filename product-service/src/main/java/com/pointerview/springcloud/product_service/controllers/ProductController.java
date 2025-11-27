@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class ProductController {
@@ -27,7 +28,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> details(@PathVariable Long id) {
+    public ResponseEntity<Product> details(@PathVariable Long id) throws InterruptedException {
+
+        if(id.equals(10L)) throw new IllegalStateException("Producto no encontrado");
+
+        if(id.equals(7L)) TimeUnit.SECONDS.sleep(3L);
+
+
         Optional<Product> optionalProduct = productService.findById(id);
 
         if(optionalProduct.isEmpty()) return ResponseEntity.notFound().build();
