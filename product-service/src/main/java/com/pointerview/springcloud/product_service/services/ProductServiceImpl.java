@@ -1,16 +1,13 @@
 package com.pointerview.springcloud.product_service.services;
 
-import com.pointerview.springcloud.product_service.entities.Product;
+import com.pointerview.springcloud.common_service.entities.Product;
 import com.pointerview.springcloud.product_service.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -42,5 +39,17 @@ public class ProductServiceImpl implements ProductService{
                     p.setPort(Integer.parseInt(env.getProperty("local.server.port")));
                     return p;
                 });
+    }
+
+    @Override
+    @Transactional
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }

@@ -28,7 +28,7 @@ public class SampleGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        log.info("Ejecutando el filtro antes del request PRE");
+        log.info("Ejecutando el filtro SampleGlobalFilter::doFilter antes del request PRE");
 
         ServerHttpRequest modifiedRequest = exchange.getRequest()
                 .mutate()

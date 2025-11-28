@@ -1,9 +1,8 @@
 package com.pointerview.springcloud.item_service.clients;
 
-import com.pointerview.springcloud.item_service.models.Product;
+import com.pointerview.springcloud.common_service.entities.Product;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,4 +14,13 @@ public interface ProductFeignClient {
 
     @GetMapping("/{id}")
     Product findById(@PathVariable Long id);
+
+    @PostMapping
+    Product saveOne(@RequestBody Product product);
+
+    @PutMapping("/{id}")
+    Product updateOne(@RequestBody Product product, @PathVariable Long id);
+
+    @DeleteMapping("/{id}")
+    void deleteOneById(@PathVariable Long id);
 }

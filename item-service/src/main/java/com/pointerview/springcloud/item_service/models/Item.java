@@ -1,6 +1,7 @@
 package com.pointerview.springcloud.item_service.models;
 
 
+import com.pointerview.springcloud.common_service.entities.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

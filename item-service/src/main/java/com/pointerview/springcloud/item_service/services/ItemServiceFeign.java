@@ -1,8 +1,8 @@
 package com.pointerview.springcloud.item_service.services;
 
+import com.pointerview.springcloud.common_service.entities.Product;
 import com.pointerview.springcloud.item_service.clients.ProductFeignClient;
 import com.pointerview.springcloud.item_service.models.Item;
-import com.pointerview.springcloud.item_service.models.Product;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +33,20 @@ public class ItemServiceFeign implements ItemService{
         } catch (FeignException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Product saveOne(Product product) {
+        return productFeignClient.saveOne(product);
+    }
+
+    @Override
+    public Product updateOne(Product product, Long id) {
+        return productFeignClient.updateOne(product, id);
+    }
+
+    @Override
+    public void deleteOneById(Long id) {
+        productFeignClient.deleteOneById(id);
     }
 }
